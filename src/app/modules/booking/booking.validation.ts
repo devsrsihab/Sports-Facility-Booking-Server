@@ -34,7 +34,7 @@ const updateBookingValidationSchema = z.object({
       .number()
       .positive()
       .min(0.01, 'Total price must be greater than zero')
-      .optional(), 
+      .optional(),
   }),
 });
 

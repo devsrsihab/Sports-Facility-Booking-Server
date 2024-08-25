@@ -19,7 +19,9 @@ const createBookings = catchAsync(async (req, res) => {
 // Read All
 const getAllBookings = catchAsync(async (req, res) => {
   const query = req.query;
-  const result = await BookingsServices.getAllBookingss(query);
+ const userinfo = req.user || {};
+
+  const result = await BookingsServices.getAllBookingss(query, userinfo);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -33,8 +35,8 @@ const getAllBookings = catchAsync(async (req, res) => {
 
 // Read One
 const getSingleBookings = catchAsync(async (req, res) => {
-  const {facilitieId} = req.params;
-  const result = await BookingsServices.getSingleBookings(facilitieId);
+  const { bookingId } = req.params;
+  const result = await BookingsServices.getSingleBookings(bookingId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -45,9 +47,10 @@ const getSingleBookings = catchAsync(async (req, res) => {
 
 // Update
 const updateBookings = catchAsync(async (req, res) => {
-  const {facilitieId} = req.params;
+  const {bookingId} = req.params;
   const updateData = req.body;
-  const result = await BookingsServices.updateBookings(facilitieId, updateData);
+
+  const result = await BookingsServices.updateBookings(bookingId, updateData);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -58,8 +61,8 @@ const updateBookings = catchAsync(async (req, res) => {
 
 // Delete
 const deleteBookings = catchAsync(async (req, res) => {
-  const {facilitieId} = req.params;
-  const result = await BookingsServices.deleteBookings(facilitieId);
+  const {bookingId} = req.params;
+  const result = await BookingsServices.deleteBookings(bookingId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
