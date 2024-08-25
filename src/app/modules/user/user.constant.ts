@@ -1,4 +1,5 @@
 export const USER_ROLE = {
+  superAdmin: 'super-admin',
   viewer: 'viewer',
   admin: 'admin',
   author: 'author',

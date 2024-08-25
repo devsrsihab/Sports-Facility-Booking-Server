@@ -7,7 +7,7 @@ export interface TUser {
   email: string;
   password: string;
   image: string;
-  role: 'admin' | 'viewer' | 'author';
+  role: 'admin' | 'viewer' | 'author' | 'super-admin';
   needPasswordChange: boolean;
   passwordChangedAt?: Date;
   status: 'in-progress' | 'blocked';
@@ -24,4 +24,5 @@ export interface UserModel extends Model<TUser> {
   ): boolean;
 }
 
-export type TUserRole = keyof typeof USER_ROLE;
+// export type TUserRole = keyof typeof USER_ROLE;
+export type TUserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];

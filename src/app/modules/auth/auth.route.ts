@@ -4,25 +4,8 @@ import validateRequest from '../../middlewares/validateRequest';
 import { AuthControllers } from './auth.controller';
 import { USER_ROLE } from '../user/user.constant';
 import auth from '../../middlewares/auth';
-import { ViewerValidations } from '../viewer/viewer.validation';
-import { AuthorValidations } from '../author/author.validation';
 
 const router = express.Router();
-
-// register
-router.post(
-  '/register-viewer',
-  validateRequest(ViewerValidations.createViewerValidationSchema),
-  AuthControllers.registerViewer,
-);
-
-// register
-router.post(
-  '/register-author',
-  validateRequest(AuthorValidations.createAuthorValidationSchema),
-  AuthControllers.registerAuthor,
-);
-
 // login
 router.post(
   '/login',

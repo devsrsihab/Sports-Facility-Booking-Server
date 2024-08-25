@@ -1,19 +1,14 @@
 import { Router } from 'express';
-import { UserRoute } from '../modules/user/user.route';
 import { AdminRoute } from '../modules/admin/admin.route';
 import { AuthRoute } from '../modules/auth/auth.route';
 import { BookRoute } from '../modules/book/book.route';
-import { CategoryRoute } from '../modules/category/category.route';
-import { BorrowRoute } from '../modules/borrow/borrow.route';
+import { FacilitieRoute } from '../modules/facilitie/facilitie.route';
+import { BookingRoute } from '../modules/booking/booking.route';
 
 const router = Router();
 
 // all routes
 const moduleRoutes = [
-  {
-    path: '/users',
-    route: UserRoute,
-  },
   {
     path: '/admins',
     route: AdminRoute,
@@ -27,12 +22,12 @@ const moduleRoutes = [
     route: BookRoute,
   },
   {
-    path: '/category',
-    route: CategoryRoute,
+    path: '/facilities',
+    route: FacilitieRoute,
   },
   {
-    path: '/borrowings',
-    route: BorrowRoute
+    path: '/bookings',
+    route: BookingRoute,
   },
 ];
 

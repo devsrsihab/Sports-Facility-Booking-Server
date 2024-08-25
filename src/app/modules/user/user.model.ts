@@ -35,7 +35,7 @@ const userSchema = new Schema<TUser, UserModel>(
     role: {
       type: String,
       enum: {
-        values: ['admin', 'viewer', 'author'],
+        values: ['admin', 'viewer', 'author', 'super-admin'],
         message: "{VALUE} is not valid. Allowed values are 'admin', 'viewer', or 'author'",
       },
       required: true,

@@ -4,31 +4,10 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { AuthServices } from './auth.service';
 import config from '../../config';
-import { UserServices } from '../user/user.service';
 
-// register viewer
-const registerViewer = catchAsync(async (req, res) => {
-  const { password, viewer: viewerData } = req.body;
-  const result = await UserServices.createViewerToDB(password, viewerData);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Viewer Registered successfully',
-    data: result,
-  });
-});
 
-// register viewer
-const registerAuthor = catchAsync(async (req, res) => {
-  const { password, author: authorData } = req.body;
-  const result = await UserServices.createAuthorToDB(password, authorData);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Author Registered successfully',
-    data: result,
-  });
-});
+
+
 
 // login user\
 const loginUser = catchAsync(async (req, res) => {
@@ -106,8 +85,6 @@ const resetPassword = catchAsync(async (req, res) => {
 });
 
 export const AuthControllers = {
-  registerViewer,
-  registerAuthor,
   loginUser,
   changePassword,
   libraryRefreshToken,

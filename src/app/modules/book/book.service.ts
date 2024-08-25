@@ -1,5 +1,4 @@
 import QueryBuilder from '../../builder/QueryBuilder';
-import { Category } from '../category/category.model';
 import { TBook } from './book.interface';
 import { Book } from './book.model';
 
@@ -31,13 +30,13 @@ const getSingleBook = async (bookId: string): Promise<TBook | null> => {
   return result;
 };
 
-// get all book by category
-const getBooksByCategory = async (category: string) => {
-  // exgtrat category id
-  const categoryId = await Category.findOne({ name: category }, { _id: 1 });
-  const result = await Book.find({ category: categoryId });
-  return result;
-};
+// // get all book by category
+// const getBooksByCategory = async (category: string) => {
+//   // exgtrat category id
+//   const categoryId = await Category.findOne({ name: category }, { _id: 1 });
+//   const result = await Book.find({ category: categoryId });
+//   return result;
+// };
 
 // Update a book
 const updateBook = async (bookId: string, updateData: Partial<TBook>): Promise<TBook | null> => {
@@ -57,5 +56,5 @@ export const BookServices = {
   getSingleBook,
   updateBook,
   deleteBook,
-  getBooksByCategory,
+  // getBooksByCategory,
 };

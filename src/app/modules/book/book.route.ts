@@ -17,7 +17,7 @@ router.post(
 
 // Read All Books (GET)
 router.get('/', BookControllers.getAllBooks);
-router.get('/bookebycat/:categoryName', BookControllers.getBooksByCategory);
+// router.get('/bookebycat/:categoryName', BookControllers.getBooksByCategory);
 
 // Read Single Book (GET)
 router.get('/:bookId', BookControllers.getSingleBook);
