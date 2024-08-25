@@ -1,17 +1,12 @@
 import { z } from 'zod';
 
-// Define Zod schemas for subobjects
-const UserNameValidationSchema = z.object({
-  firstName: z.string().min(1),
-  middleName: z.string(),
-  lastName: z.string().min(1),
-});
+
 
 // create validation
 const createAdminValidationSchema = z.object({
   body: z.object({
     admin: z.object({
-      name: UserNameValidationSchema,
+      name: z.string().min(1),
       image: z.string().url().optional(),
       email: z.string().email(),
     }),
@@ -21,7 +16,7 @@ const createAdminValidationSchema = z.object({
 const updateAdminValidationSchema = z.object({
   body: z.object({
     admin: z.object({
-      name: UserNameValidationSchema.optional(),
+      name: z.string().min(1).optional(),
       image: z.string().url().optional(),
       email: z.string().email().optional(),
     }),

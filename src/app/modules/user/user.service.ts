@@ -3,18 +3,48 @@ import mongoose from 'mongoose';
 import config from '../../config';
 import { TUser } from './user.interface';
 import { User } from './user.model';
-import { generatAdminId} from './user.utils';
+import { generatAdminId, generatUserId} from './user.utils';
 import AppError from '../../errors/appError';
 import httpStatus from 'http-status';
 import { TAdmin } from '../admin/admin.interface';
 import { Admin } from '../admin/admin.model';
 
 
+// create user
+const createUserToDB = async (payload: TUser) => {
+  // create a user object
+  const userData: Partial<TUser> = {};
+
+  console.log(payload);
+
+  // if the password empty
+  userData.password = payload.password || (config.user_default_password as string);
+
+  // set user role
+  userData.role = 'user';
+  // email
+  userData.email = payload.email;
+  // image
+  userData.image = payload.image;
+
+
+  try {
+
+    userData.id = await generatUserId();
+    // create a user transaction 01
+    const result = await User.create(userData);
+    return result;
+  } catch (error: any) {
+    throw new AppError(httpStatus.BAD_REQUEST, `Failed to create user: ${error?.message}`);
+  }
+};
+
+
 // create Admin
 const createAdminToDB = async (password: string, payload: TAdmin) => {
   // create a user object
   const userData: Partial<TUser> = {};
-
+  
   // if the password empty
   userData.password = password || (config.user_default_password as string);
   // set user role
@@ -23,26 +53,25 @@ const createAdminToDB = async (password: string, payload: TAdmin) => {
   userData.email = payload.email;
   // image
   userData.image = payload.image;
-  // dateOfBirth
-  userData.dateOfBirth = payload.dateOfBirth;
   // start session
   const session = await mongoose.startSession();
-
+  
   try {
     // start session
     session.startTransaction();
-
+    
     userData.id = await generatAdminId();
     // create a user transaction 01
     const newUser = await User.create([userData], { session }); // transaction return array
     // if created the user successfully then create the user
+    console.log(payload);  
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
-
+    
     // set user id in viewer id field
     payload.id = newUser[0].id; // embating id
-
+    
     // set viewer user field data
     payload.user = newUser[0]._id; // reference id
     const newAdmin = await Admin.create([payload], { session });
@@ -96,6 +125,7 @@ const changeStatus = async (id: string, payload: { status: string }) => {
 
 export const UserServices = {
   createAdminToDB,
+  createUserToDB,
   getMeFromDB,
   changeStatus,
 };

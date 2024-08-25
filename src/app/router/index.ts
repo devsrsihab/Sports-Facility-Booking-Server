@@ -4,6 +4,7 @@ import { AuthRoute } from '../modules/auth/auth.route';
 import { BookRoute } from '../modules/book/book.route';
 import { FacilitieRoute } from '../modules/facilitie/facilitie.route';
 import { BookingRoute } from '../modules/booking/booking.route';
+import { UserRoute } from '../modules/user/user.route';
 
 const router = Router();
 
@@ -12,6 +13,10 @@ const moduleRoutes = [
   {
     path: '/admins',
     route: AdminRoute,
+  },
+  {
+    path: '/users',
+    route: UserRoute,
   },
   {
     path: '/auth',

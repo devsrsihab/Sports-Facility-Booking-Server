@@ -8,18 +8,16 @@ import { UserValidations } from './user.validation';
 
 const router = express.Router();
 
-
-
 // admin create
 router.post(
   '/create-admin',
-  auth(USER_ROLE.admin, USER_ROLE.superAdmin),
+  auth(USER_ROLE.admin),
   validateRequest(AdminValidations.createAdminValidationSchema),
   UserController.createAdmin,
 );
 
 // get me
-router.get('/me', auth(USER_ROLE.admin, USER_ROLE.viewer), UserController.getMe);
+router.get('/me', auth(USER_ROLE.admin), UserController.getMe);
 
 // change status
 router.patch(

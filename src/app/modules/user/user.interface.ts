@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { Model } from 'mongoose';
 import { USER_ROLE } from './user.constant';
+import { Types } from 'mongoose';
 
 export interface TUser {
   id: string;
   email: string;
   password: string;
   image: string;
-  role: 'admin' | 'viewer' | 'author' | 'super-admin';
-  needPasswordChange: boolean;
-  passwordChangedAt?: Date;
+  role: 'admin' | 'user';
   status: 'in-progress' | 'blocked';
-  dateOfBirth: string;
+  gender?: 'male' | 'female' | 'other';
+  bookings: Types.ObjectId[]; // Array of Booking ObjectIds
   isDeleted: boolean;
 }
 

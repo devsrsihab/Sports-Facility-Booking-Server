@@ -24,18 +24,18 @@ const userSchema = new Schema<TUser, UserModel>(
       required: true,
       select: 0,
     },
-    needPasswordChange: {
-      type: Boolean,
-      required: true,
-      default: true,
-    },
-    passwordChangedAt: {
-      type: Date,
+
+    gender: {
+      type: String,
+      enum: {
+        values: ['male', 'female', 'other'], //'male' | 'female' | 'other'
+        message: "{VALUE} is not valid. Allowed values are 'male', 'female', or 'other'",
+      },
     },
     role: {
       type: String,
       enum: {
-        values: ['admin', 'viewer', 'author', 'super-admin'],
+        values: ['admin', 'user'],
         message: "{VALUE} is not valid. Allowed values are 'admin', 'viewer', or 'author'",
       },
       required: true,
@@ -48,11 +48,6 @@ const userSchema = new Schema<TUser, UserModel>(
       },
       default: 'in-progress',
       required: true,
-    },
-    dateOfBirth: {
-      type: String,
-      required: true,
-      unique: true,
     },
     isDeleted: {
       type: Boolean,

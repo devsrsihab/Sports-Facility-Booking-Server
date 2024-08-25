@@ -4,8 +4,19 @@ import validateRequest from '../../middlewares/validateRequest';
 import { AuthControllers } from './auth.controller';
 import { USER_ROLE } from '../user/user.constant';
 import auth from '../../middlewares/auth';
+import { UserValidations } from '../user/user.validation';
+import { UserController } from '../user/user.controller';
 
 const router = express.Router();
+
+// user create
+router.post(
+  '/register-user',
+  validateRequest(UserValidations.UserSchemaValidation),
+  UserController.createUser,
+);
+
+
 // login
 router.post(
   '/login',
@@ -16,7 +27,7 @@ router.post(
 // passwrod change
 router.post(
   '/change-password',
-  auth(USER_ROLE.admin, USER_ROLE.viewer),
+  auth(USER_ROLE.admin),
   validateRequest(AuthValidation.changePasswordValidatonSchema),
   AuthControllers.changePassword,
 );

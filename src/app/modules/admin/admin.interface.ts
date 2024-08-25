@@ -9,11 +9,10 @@ export type TUserName = {
 
 export type TAdmin = {
   id: string;
-  name: TUserName;
+  name: string;
   user: Types.ObjectId;
   image: string;
   gender: 'male' | 'female' | 'other';
   email: string;
-  dateOfBirth: string;
   isDeleted: boolean;
 };

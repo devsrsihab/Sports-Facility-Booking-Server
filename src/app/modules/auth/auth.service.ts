@@ -56,7 +56,6 @@ const loginUser = async (payload: TLoginUser) => {
   return {
     accessToken,
     libraryRefreshToken,
-    neetPassWord: user.needPasswordChange,
   };
 };
 
@@ -120,7 +119,7 @@ const libraryRefreshToken = async (token: string) => {
   const decoded = jwt.verify(token, config.jwt_refresh_secret as string) as JwtPayload;
 
   // user role checking
-  const { email, iat } = decoded as JwtPayload;
+  const { email } = decoded as JwtPayload;
   const user = await User.isUserExistByCustomIdOrEmail(email);
   const isDeleted = user?.isDeleted;
   const isUserBlocked = user?.status === 'blocked';
@@ -140,13 +139,7 @@ const libraryRefreshToken = async (token: string) => {
     throw new AppError(httpStatus.NOT_FOUND, 'User is blocked');
   }
 
-  // check the user issed password or jwt issued  time
-  if (
-    user.passwordChangedAt &&
-    (await User.isJWTIssuedBeforePasswordChanged(user.passwordChangedAt, iat as number))
-  ) {
-    throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
-  }
+
 
   // jwt token
   const jwtPayload = {

@@ -4,25 +4,13 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 
 // viewer create controller
-const createAuthor = catchAsync(async (req, res) => {
-  const { password, author: authorData } = req.body;
-  const result = await UserServices.createAuthorToDB(password, authorData);
+const createUser = catchAsync(async (req, res) => {
+  const {  author: authorData } = req.body;
+  const result = await UserServices.createUserToDB(authorData);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Author created successfully',
-    data: result,
-  });
-});
-
-// viewer create controller
-const createViewer = catchAsync(async (req, res) => {
-  const { password, viewer: viewerData } = req.body;
-  const result = await UserServices.createViewerToDB(password, viewerData);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'viewer created successfully',
     data: result,
   });
 });
@@ -41,7 +29,7 @@ const createAdmin = catchAsync(async (req, res) => {
 
 // get me controller
 const getMe = catchAsync(async (req, res) => {
-  const { email, role } = req.user;  
+  const { email, role } = req.user;
   const result = await UserServices.getMeFromDB(email, role);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -65,8 +53,7 @@ const changeStatus = catchAsync(async (req, res) => {
 });
 
 export const UserController = {
-  createViewer,
-  createAuthor,
+  createUser,
   createAdmin,
   getMe,
   changeStatus,
