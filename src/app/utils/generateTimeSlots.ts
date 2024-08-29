@@ -8,7 +8,7 @@ import AppError from '../errors/appError';
  * @param availableSlots - The number of available time slots to generate.
  * @returns An array of formatted time slot strings.
  */
-export function generateTimeSlots(startHour: number, endHour: number, availableSlots: number): string[] {
+export const generateTimeSlots = (startHour: number, endHour: number, availableSlots: number): string[] => {
   // Validate inputs
   if (startHour < 0 || endHour > 24 || startHour >= endHour) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Invalid start or end hour.');
@@ -49,7 +49,3 @@ function formatTime24(minutes: number): string {
 
   return `${formattedHours}:${formattedMinutes}`;
 }
-
-// Example usage
-const slots = generateTimeSlots(8, 18, 10);
-console.log(slots);
