@@ -43,6 +43,18 @@ const getSingleFacilitie = catchAsync(async (req, res) => {
   });
 });
 
+
+// getAvailabilitySlots
+const getAvailabilitySlots = catchAsync(async (req, res) => {
+  const result = await FacilitieServices.getAvailabilitySlots(req.query);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Get all Availabe Slots successfully',
+    data: result,
+  });
+});
+
 // Update
 const updateFacilitie = catchAsync(async (req, res) => {
   const {facilitieId} = req.params;
@@ -74,4 +86,5 @@ export const FacilitieControllers = {
   getSingleFacilitie,
   updateFacilitie,
   deleteFacilitie,
+  getAvailabilitySlots,
 };

@@ -14,7 +14,7 @@ router.post(
 
 // // Read All Facilities (GET)
 router.get('/', FacilitieControllers.getAllFacilities);
-// router.get('/Facilitieebycat/:categoryName', FacilitieControllers.getFacilitiesByCategory);
+router.get('/check-availability', FacilitieControllers.getAvailabilitySlots);
 
 // Read Single Facilitie (GET)
 router.get('/:facilitieId', FacilitieControllers.getSingleFacilitie);
@@ -27,9 +27,6 @@ router.patch(
 );
 
 // Delete Facilitie (DELETE)
-router.delete(
-  '/:facilitieId',
-  FacilitieControllers.deleteFacilitie,
-);
+router.delete('/:facilitieId', FacilitieControllers.deleteFacilitie);
 
 export const FacilitieRoute = router;
