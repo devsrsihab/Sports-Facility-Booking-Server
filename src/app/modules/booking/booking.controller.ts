@@ -2,10 +2,16 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { BookingsServices } from './booking.service';
+import { User } from '../user/user.model';
 
 // Create
 const createBookings = catchAsync(async (req, res) => {
   const bookingsData = req.body;
+  const userEmail = req.user?.email;
+  const user = await User.findOne({ email: userEmail }).select('_id');
+
+  bookingsData.user = user?._id;
+
   const result = await BookingsServices.createBookings(bookingsData);
   // const result = 'none';
   sendResponse(res, {
@@ -19,7 +25,7 @@ const createBookings = catchAsync(async (req, res) => {
 // Read All
 const getAllBookings = catchAsync(async (req, res) => {
   const query = req.query;
- const userinfo = req.user || {};
+  const userinfo = req.user || {};
 
   const result = await BookingsServices.getAllBookingss(query, userinfo);
   sendResponse(res, {
@@ -30,8 +36,6 @@ const getAllBookings = catchAsync(async (req, res) => {
     data: result.result,
   });
 });
-
-
 
 // Read One
 const getSingleBookings = catchAsync(async (req, res) => {
@@ -47,7 +51,7 @@ const getSingleBookings = catchAsync(async (req, res) => {
 
 // Update
 const updateBookings = catchAsync(async (req, res) => {
-  const {bookingId} = req.params;
+  const { bookingId } = req.params;
   const updateData = req.body;
 
   const result = await BookingsServices.updateBookings(bookingId, updateData);
@@ -61,7 +65,7 @@ const updateBookings = catchAsync(async (req, res) => {
 
 // Delete
 const deleteBookings = catchAsync(async (req, res) => {
-  const {bookingId} = req.params;
+  const { bookingId } = req.params;
   const result = await BookingsServices.deleteBookings(bookingId);
   sendResponse(res, {
     statusCode: httpStatus.OK,

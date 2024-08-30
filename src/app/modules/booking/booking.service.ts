@@ -1,12 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status';
 import QueryBuilder from '../../builder/QueryBuilder';
+import AppError from '../../errors/appError';
+import { Facilitie } from '../facilitie/facilitie.model';
 import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
 
 // Create a Booking
 const createBookings = async (bookingsData: TBooking) => {
-  const result = await Booking.create(bookingsData);
-  return result;
+  // Step 1: Fetch the facility details using the facility ID
+  const facility = await Facilitie.findById(bookingsData.facility);
+  if (!facility) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Facility not found');
+  }
+
+  // Step 2: Calculate the total amount
+  const { startTime, endTime, bookingDate } = bookingsData;
+  const start = new Date(`1970-01-01T${startTime}:00`);
+  const end = new Date(`1970-01-01T${endTime}:00`);
+  const durationInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+
+  if (durationInHours <= 0) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'End time must be after start time.');
+  }
+
+  const totalAmount = durationInHours * facility.pricePerHour;
+
+  // Step 3: Check if the slot is available
+  const existingBookings = await Booking.find({
+    facility: bookingsData.facility,
+    bookingDate: bookingDate,
+    $or: [
+      {
+        startTime: { $lt: endTime }, // Existing booking starts before the new booking ends
+        endTime: { $gt: startTime }, // Existing booking ends after the new booking starts
+      },
+    ],
+  });
+
+  if (existingBookings.length > 0) {
+    throw new AppError(httpStatus.CONFLICT, 'The time slot is already booked.');
+  }
+
+  // Step 4: Add the calculated totalAmount to the bookingsData
+  bookingsData.totalAmount = totalAmount;
+
+  // Step 5: Create the booking
+  const newBooking = await Booking.create(bookingsData);
+
+  return newBooking;
 };
 
 // Get all Bookingss
@@ -17,9 +59,12 @@ const getAllBookingss = async (query: Record<string, unknown>, userinfo: any) =>
 
   // If the user is an admin, get all bookings
   if (user && user?.role === 'admin') {
-    BookingsQuery = new QueryBuilder(Booking.find().populate('facility').populate('user'), query).filter().sort().paginate().fields();
-  }
-  else {
+    BookingsQuery = new QueryBuilder(Booking.find().populate('facility').populate('user'), query)
+      .filter()
+      .sort()
+      .paginate()
+      .fields();
+  } else {
     BookingsQuery = new QueryBuilder(
       Booking.find({ email: user.email }).populate('facility').populate('user'),
       query,
@@ -42,7 +87,6 @@ const getAllBookingss = async (query: Record<string, unknown>, userinfo: any) =>
   };
 };
 
-
 // Get a Booking by ID
 const getSingleBookings = async (bookingId: string): Promise<TBooking | null> => {
   const result = await Booking.findById(bookingId).populate('facility').populate('user');
@@ -62,7 +106,7 @@ const updateBookings = async (
 
 // Delete a Booking
 const deleteBookings = async (bookingId: string) => {
-  // hard delete the booking 
+  // hard delete the booking
   const result = await Booking.findByIdAndDelete(bookingId);
   return result;
 };

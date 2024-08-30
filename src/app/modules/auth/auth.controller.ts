@@ -48,8 +48,6 @@ const changePassword = catchAsync(async (req, res) => {
 const libraryRefreshToken = catchAsync(async (req, res) => {
   const { libraryRefreshToken } = req.cookies;
 
-  console.log('libraryRefreshToken ==>', libraryRefreshToken);
-
   const result = await AuthServices.libraryRefreshToken(libraryRefreshToken);
 
   sendResponse(res, {

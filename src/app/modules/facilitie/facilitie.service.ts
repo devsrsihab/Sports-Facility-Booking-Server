@@ -40,7 +40,6 @@ const getSingleFacilitie = async (FacilitieId: string): Promise<TFacility | null
 const getAvailabilitySlots = async (query: Record<string, unknown>) => {
   try {
     const { date, facility: facilityId } = query;
-    
 
     if (!date || !facilityId) {
       throw new AppError(httpStatus.NOT_FOUND, 'Date and facilityId are required.');
@@ -62,38 +61,36 @@ const getAvailabilitySlots = async (query: Record<string, unknown>) => {
     }
 
     // Retrieve bookings for the given date and facility
-    const bookings = await Booking?.find({
+    const bookings = await Booking.find({
       facility: facilityIdStr,
       bookingDate: dateStr,
       status: 'confirmed',
     });
 
     // Generate time slots based on facility's working hours and availability
-    const workingHoursStart = 8;
-    const workingHoursEnd = 18;
-    const totalSlots = 10;
+    const workingHoursStart = 8; // 8:00 AM
+    const workingHoursEnd = 18; // 6:00 PM
+    const totalSlots = facility.availableSlots;
 
     const allSlots = generateTimeSlots(workingHoursStart, workingHoursEnd, totalSlots);
 
     // Filter out slots that are already booked
-    const bookedSlots = bookings
-      .map((booking) => {
-        const startTime = moment(`${dateStr}T${booking.startTime}`, 'YYYY-MM-DDTHH:mm');
-        const endTime = moment(`${dateStr}T${booking.endTime}`, 'YYYY-MM-DDTHH:mm');
-        return allSlots.filter((slot) => {
-          const [slotStart, slotEnd] = slot.split(' - ').map((time) => moment(time, 'HH:mm'));
-          return (
-            startTime.isBetween(slotStart, slotEnd, null, '[)') ||
-            endTime.isBetween(slotStart, slotEnd, null, '(]')
-          );
-        });
-      })
-      .flat();
+    const availableSlots = allSlots.filter((slot) => {
+      const [slotStartStr, slotEndStr] = slot.split(' - ');
+      const slotStart = moment(`${dateStr}T${slotStartStr}`, 'YYYY-MM-DDTHH:mm');
+      const slotEnd = moment(`${dateStr}T${slotEndStr}`, 'YYYY-MM-DDTHH:mm');
 
-    const availableSlots = allSlots.filter((slot) => !bookedSlots.includes(slot));
+      return !bookings.some((booking) => {
+        const bookingStartTime = moment(`${dateStr}T${booking.startTime}`, 'YYYY-MM-DDTHH:mm');
+        const bookingEndTime = moment(`${dateStr}T${booking.endTime}`, 'YYYY-MM-DDTHH:mm');
+
+        // Check if the slot overlaps with the booking time
+        return slotStart.isBefore(bookingEndTime) && slotEnd.isAfter(bookingStartTime);
+      });
+    });
 
     return availableSlots;
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error fetching availability slots:', error);
     throw new AppError(httpStatus.NOT_FOUND, error.message);
   }
