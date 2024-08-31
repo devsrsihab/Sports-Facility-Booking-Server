@@ -13,6 +13,10 @@ const userSchema = new Schema<TUser, UserModel>(
       required: true,
       unique: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
@@ -75,7 +79,7 @@ userSchema.post('save', function (doc, next) {
 });
 
 // user exist cusotm static method
-userSchema.statics.isUserExistByCustomIdOrEmail = async function ( email: string) {
+userSchema.statics.isUserExistByCustomIdOrEmail = async function (email: string) {
   return await User.findOne({ email }).select('+password');
 };
 // user exist cusotm static method

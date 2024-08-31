@@ -15,8 +15,6 @@ const createUserToDB = async (payload: TUser) => {
   // create a user object
   const userData: Partial<TUser> = {};
 
-  console.log(payload);
-
   // if the password empty
   userData.password = payload.password || (config.user_default_password as string);
 
@@ -24,12 +22,12 @@ const createUserToDB = async (payload: TUser) => {
   userData.role = 'user';
   // email
   userData.email = payload.email;
+  // name
+  userData.name = payload.name;
   // image
   userData.image = payload.image;
 
-
   try {
-
     userData.id = await generatUserId();
     // create a user transaction 01
     const result = await User.create(userData);
@@ -100,12 +98,7 @@ const getMeFromDB = async (email: string, role: string) => {
   let result = null;
 
   // if viewer
-  if (role === 'viewer') {
-    result = await User.findOne({ email });
-  }
-
-  // if author
-  if (role === 'author') {
+  if (role === 'user') {
     result = await User.findOne({ email });
   }
 

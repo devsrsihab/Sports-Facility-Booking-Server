@@ -5,6 +5,7 @@ import { Types } from 'mongoose';
 
 export interface TUser {
   id: string;
+  name: string;
   email: string;
   password: string;
   image: string;

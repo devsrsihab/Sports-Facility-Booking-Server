@@ -4,7 +4,7 @@ import { USER_STATUS } from './user.constant';
 // user Schema validation
 const UserSchemaValidation = z.object({
   body: z.object({
-    author: z.object({
+    user: z.object({
       password: z
         .string({
           invalid_type_error: 'Password must be a string',

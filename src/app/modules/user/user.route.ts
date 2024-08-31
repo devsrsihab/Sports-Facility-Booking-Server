@@ -17,7 +17,7 @@ router.post(
 );
 
 // get me
-router.get('/me', auth(USER_ROLE.admin), UserController.getMe);
+router.get('/me', auth(USER_ROLE.admin, USER_ROLE.user), UserController.getMe);
 
 // change status
 router.patch(

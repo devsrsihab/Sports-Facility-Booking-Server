@@ -5,12 +5,12 @@ import catchAsync from '../../utils/catchAsync';
 
 // viewer create controller
 const createUser = catchAsync(async (req, res) => {
-  const {  author: authorData } = req.body;
-  const result = await UserServices.createUserToDB(authorData);
+  const { user: userData } = req.body;
+  const result = await UserServices.createUserToDB(userData);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Author created successfully',
+    message: 'User created successfully',
     data: result,
   });
 });
