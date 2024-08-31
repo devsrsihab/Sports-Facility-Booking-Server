@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import httpStatus from 'http-status';
 import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/appError';
 import { Facilitie } from '../facilitie/facilitie.model';
 import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
+import { initialPayment } from '../payment/payments.utils';
+import { randomUUID } from 'crypto';
+import httpStatus from '../../../../node_modules/http-status/lib/index';
 
 // Create a Booking
-const createBookings = async (bookingsData: TBooking) => {
+const createBookings = async (userEmail: any, bookingsData: TBooking) => {
   // Step 1: Fetch the facility details using the facility ID
   const facility = await Facilitie.findById(bookingsData.facility);
   if (!facility) {
@@ -44,11 +46,20 @@ const createBookings = async (bookingsData: TBooking) => {
 
   // Step 4: Add the calculated totalAmount to the bookingsData
   bookingsData.totalAmount = totalAmount;
+  bookingsData.transaction_id = randomUUID();
 
   // Step 5: Create the booking
   const newBooking = await Booking.create(bookingsData);
 
-  return newBooking;
+  const paymentInfo = {
+    userEmail,
+    amount: newBooking.totalAmount,
+    tran_id: newBooking.transaction_id,
+  };
+
+  const payment = await initialPayment(paymentInfo);
+
+  return payment;
 };
 
 // Get all Bookingss

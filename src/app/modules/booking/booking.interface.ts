@@ -8,4 +8,5 @@ export interface TBooking {
   endTime: string;
   totalAmount: number;
   status: 'pending' | 'confirmed' | 'cancelled';
+  transaction_id: string;
 }

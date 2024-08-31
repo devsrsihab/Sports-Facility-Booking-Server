@@ -15,6 +15,7 @@ const bookingSchema = new Schema<TBooking>(
       enum: ['pending', 'confirmed', 'cancelled'],
       default: 'pending',
     },
+    transaction_id: { type: String, required: true },
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields

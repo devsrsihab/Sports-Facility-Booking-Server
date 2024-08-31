@@ -1,8 +1,8 @@
-import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { BookingsServices } from './booking.service';
 import { User } from '../user/user.model';
+import httpStatus from '../../../../node_modules/http-status/lib/index';
 
 // Create
 const createBookings = catchAsync(async (req, res) => {
@@ -12,7 +12,7 @@ const createBookings = catchAsync(async (req, res) => {
 
   bookingsData.user = user?._id;
 
-  const result = await BookingsServices.createBookings(bookingsData);
+  const result = await BookingsServices.createBookings(userEmail, bookingsData);
   // const result = 'none';
   sendResponse(res, {
     statusCode: httpStatus.CREATED,

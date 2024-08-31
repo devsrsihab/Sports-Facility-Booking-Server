@@ -24,4 +24,9 @@ export default {
 
   imgbb_api_secret: process.env.IMGBB_API_SECRET,
   imgbb_api_url: process.env.IMGBB_API_URL,
+
+  store_id: process.env.STORE_ID,
+  signature_key: process.env.SIGNATURE_KEY,
+  payment_url: process.env.PAYMENT_URL,
+  payment_verify_url: process.env.PAYMENT_VERIFY_URL,
 };
