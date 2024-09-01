@@ -45,6 +45,7 @@ const createBookings = async (userEmail: any, bookingsData: TBooking) => {
   }
 
   // Step 4: Add the calculated totalAmount to the bookingsData
+  bookingsData.userEmail = userEmail;
   bookingsData.totalAmount = totalAmount;
   bookingsData.transaction_id = randomUUID();
 
@@ -77,7 +78,7 @@ const getAllBookingss = async (query: Record<string, unknown>, userinfo: any) =>
       .fields();
   } else {
     BookingsQuery = new QueryBuilder(
-      Booking.find({ email: user.email }).populate('facility').populate('user'),
+      Booking.find({ userEmail: user.email }).populate('facility').populate('user'),
       query,
     )
       .filter()

@@ -7,6 +7,7 @@ const createFacilitieValidationSchema = z.object({
     location: z.string(),
     image: z.string(),
     description: z.string(),
+    pricePerHour: z.number().positive().int(),
     availableSlots: z.number().positive().int(),
   }),
 });
@@ -18,6 +19,7 @@ const updateFacilitieValidationSchema = z.object({
     location: z.string().optional(),
     image: z.string().optional(),
     description: z.string().optional(),
+    pricePerHour: z.number().positive().int().optional(),
     availableSlots: z.number().positive().int().optional(),
   }),
 });

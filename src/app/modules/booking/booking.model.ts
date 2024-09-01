@@ -6,6 +6,7 @@ const bookingSchema = new Schema<TBooking>(
   {
     facility: { type: Schema.Types.ObjectId, ref: 'Facilitie', required: true },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    userEmail: { type: String, required: true },
     bookingDate: { type: String, required: true },
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },

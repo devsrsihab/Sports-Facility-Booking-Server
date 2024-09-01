@@ -17,7 +17,6 @@ router.post(
 
 // // Read All Bookings (GET)
 router.get('/', auth(USER_ROLE.user, USER_ROLE.admin), BookingsControllers.getAllBookings);
-// router.get('/Bookingebycat/:categoryName', BookingControllers.getBookingsByCategory);
 
 // Read Single Booking (GET)
 router.get('/:bookingId', BookingsControllers.getSingleBookings);
