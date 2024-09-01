@@ -117,6 +117,13 @@ const updateBookings = async (
 };
 
 // Delete a Booking
+const cancelBookings = async (id: string) => {
+  // cancel the booking
+  const result = await Booking.findByIdAndUpdate(id, { status: 'cancelled' }, { new: true });
+  return result;
+};
+
+// Delete a Booking
 const deleteBookings = async (bookingId: string) => {
   // hard delete the booking
   const result = await Booking.findByIdAndDelete(bookingId);
@@ -129,4 +136,5 @@ export const BookingsServices = {
   getSingleBookings,
   updateBookings,
   deleteBookings,
+  cancelBookings,
 };

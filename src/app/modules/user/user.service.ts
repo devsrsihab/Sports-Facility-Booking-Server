@@ -49,6 +49,8 @@ const createAdminToDB = async (password: string, payload: TAdmin) => {
   userData.role = 'admin';
   // create admin email
   userData.email = payload.email;
+  // phone
+  userData.phone = payload.phone;
   // image
   userData.image = payload.image;
   // start session

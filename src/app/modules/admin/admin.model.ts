@@ -14,6 +14,7 @@ const AdminSchema = new Schema<TAdmin>(
       unique: true,
     },
     name: { type: String, required: true },
+    phone: { type: String, required: true },
     image: { type: String, required: true, default: defaultImg },
     email: { type: String, required: true, unique: true },
     gender: {

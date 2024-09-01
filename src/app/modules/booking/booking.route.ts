@@ -24,11 +24,19 @@ router.get('/:bookingId', BookingsControllers.getSingleBookings);
 // Update Booking (PUT)
 router.patch(
   '/:bookingId',
+  auth(USER_ROLE.user, USER_ROLE.admin),
   validateRequest(BookingValidation.updateBookingValidationSchema),
   BookingsControllers.updateBookings,
 );
 
+// cancel booking
+router.patch(
+  '/cancel/:bookingId',
+  auth(USER_ROLE.user, USER_ROLE.admin),
+  BookingsControllers.cancelBookings,
+);
+
 // Delete Booking (DELETE)
-router.delete('/:bookingId', BookingsControllers.deleteBookings);
+router.delete('/:bookingId', auth(USER_ROLE.admin), BookingsControllers.deleteBookings);
 
 export const BookingRoute = router;
