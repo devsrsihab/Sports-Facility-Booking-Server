@@ -91,7 +91,6 @@ const getAvailabilitySlots = async (query: Record<string, unknown>) => {
 
     return availableSlots;
   } catch (error: any) {
-    console.error('Error fetching availability slots:', error);
     throw new AppError(httpStatus.NOT_FOUND, error.message);
   }
 };
