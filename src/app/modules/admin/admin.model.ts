@@ -17,13 +17,6 @@ const AdminSchema = new Schema<TAdmin>(
     phone: { type: String, required: true },
     image: { type: String, required: true, default: defaultImg },
     email: { type: String, required: true, unique: true },
-    gender: {
-      type: String,
-      enum: {
-        values: ['male', 'female', 'other'], //'male' | 'female' | 'other'
-        message: "{VALUE} is not valid. Allowed values are 'male', 'female', or 'other'",
-      },
-    },
     isDeleted: { type: Boolean, required: true, default: false },
   },
   {

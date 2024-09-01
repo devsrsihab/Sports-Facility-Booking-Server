@@ -49,6 +49,8 @@ const createAdminToDB = async (password: string, payload: TAdmin) => {
   userData.role = 'admin';
   // create admin email
   userData.email = payload.email;
+  // create admin name
+  userData.name = payload.name;
   // phone
   userData.phone = payload.phone;
   // image
@@ -63,17 +65,13 @@ const createAdminToDB = async (password: string, payload: TAdmin) => {
     userData.id = await generatAdminId();
     // create a user transaction 01
     const newUser = await User.create([userData], { session }); // transaction return array
-    // if created the user successfully then create the user
-    console.log(payload);
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
 
     // set user id in viewer id field
-    payload.id = newUser[0].id; // embating id
+    payload.id = newUser[0].id;
 
-    // set viewer user field data
-    payload.user = newUser[0]._id; // reference id
     const newAdmin = await Admin.create([payload], { session });
 
     if (!newAdmin.length) {

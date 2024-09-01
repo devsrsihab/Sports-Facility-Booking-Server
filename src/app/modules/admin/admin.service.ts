@@ -9,7 +9,7 @@ import { TAdmin } from './admin.interface';
 
 // get all admins
 const getAllAdminsFromDB = async (query: Record<string, unknown>) => {
-  const adminQuery = new QueryBuilder(Admin.find().populate('user'), query)
+  const adminQuery = new QueryBuilder(Admin.find(), query)
     .search(AdminSearchableFields)
     .filter()
     .sort()
