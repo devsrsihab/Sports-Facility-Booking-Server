@@ -5,4 +5,3 @@ export const USER_ROLE = {
 
 // user status
 export const USER_STATUS = ['in-progress', 'blocked'];
-

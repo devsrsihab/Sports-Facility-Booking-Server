@@ -1,8 +1,11 @@
 import httpStatus from 'http-status';
 import AppError from '../errors/appError';
 
-
-export const generateTimeSlots = (startHour: number, endHour: number, availableSlots: number): string[] => {
+export const generateTimeSlots = (
+  startHour: number,
+  endHour: number,
+  availableSlots: number,
+): string[] => {
   // Validate inputs
   if (startHour < 0 || endHour > 24 || startHour >= endHour) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Invalid start or end hour.');
@@ -27,7 +30,7 @@ export const generateTimeSlots = (startHour: number, endHour: number, availableS
   }
 
   return slots;
-}
+};
 
 function formatTime24(minutes: number): string {
   const hours = Math.floor(minutes / 60);

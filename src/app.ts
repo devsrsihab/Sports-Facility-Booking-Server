@@ -14,9 +14,9 @@ app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
 app.use('/api/v1', router);
 
 // globa err handler
-app.use(globalErrHandler)
+app.use(globalErrHandler);
 
 // not found route
-app.use(notFound)
+app.use(notFound);
 
 export default app;

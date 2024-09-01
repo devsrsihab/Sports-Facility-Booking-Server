@@ -139,8 +139,6 @@ const libraryRefreshToken = async (token: string) => {
     throw new AppError(httpStatus.NOT_FOUND, 'User is blocked');
   }
 
-
-
   // jwt token
   const jwtPayload = {
     email: user?.email,

@@ -1,4 +1,4 @@
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 
 // catchAsync higher order function
 const catchAsync = (fn: RequestHandler) => {
@@ -7,5 +7,4 @@ const catchAsync = (fn: RequestHandler) => {
   };
 };
 
-
-export default catchAsync
+export default catchAsync;

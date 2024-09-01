@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-
-
 // create validation
 const createAdminValidationSchema = z.object({
   body: z.object({

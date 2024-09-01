@@ -16,7 +16,6 @@ router.post(
   UserController.createUser,
 );
 
-
 // login
 router.post(
   '/login',

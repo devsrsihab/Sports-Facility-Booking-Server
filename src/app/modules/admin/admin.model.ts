@@ -1,8 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { TAdmin } from './admin.interface';
 
-
-
 const defaultImg = 'https://i.ibb.co/WGCzqdW/vecteezy-3d-icon-of-profile-privacy-24514477.png';
 
 // admin schema

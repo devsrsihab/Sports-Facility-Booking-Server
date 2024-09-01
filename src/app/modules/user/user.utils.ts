@@ -21,7 +21,6 @@ const findLastUserId = async () => {
   return lastViewer?.id ? lastViewer.id : undefined;
 };
 
-
 // find last Admin id
 const findLastAdminId = async () => {
   const lastAdmin = await User.findOne(
@@ -74,4 +73,3 @@ export const generatAdminId = async () => {
   incrementId = `A-${incrementId}`;
   return incrementId; // A-0001++
 };
-

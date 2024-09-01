@@ -29,11 +29,9 @@ const getAllFacilities = catchAsync(async (req, res) => {
   });
 });
 
-
-
 // Read One
 const getSingleFacilitie = catchAsync(async (req, res) => {
-  const {facilitieId} = req.params;
+  const { facilitieId } = req.params;
   const result = await FacilitieServices.getSingleFacilitie(facilitieId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -42,7 +40,6 @@ const getSingleFacilitie = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
 
 // getAvailabilitySlots
 const getAvailabilitySlots = catchAsync(async (req, res) => {
@@ -57,7 +54,7 @@ const getAvailabilitySlots = catchAsync(async (req, res) => {
 
 // Update
 const updateFacilitie = catchAsync(async (req, res) => {
-  const {facilitieId} = req.params;
+  const { facilitieId } = req.params;
   const updateData = req.body;
   const result = await FacilitieServices.updateFacilitie(facilitieId, updateData);
   sendResponse(res, {
@@ -70,7 +67,7 @@ const updateFacilitie = catchAsync(async (req, res) => {
 
 // Delete
 const deleteFacilitie = catchAsync(async (req, res) => {
-  const {facilitieId} = req.params;
+  const { facilitieId } = req.params;
   const result = await FacilitieServices.deleteFacilitie(facilitieId);
   sendResponse(res, {
     statusCode: httpStatus.OK,

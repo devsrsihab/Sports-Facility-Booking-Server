@@ -5,10 +5,6 @@ import sendResponse from '../../utils/sendResponse';
 import { AuthServices } from './auth.service';
 import config from '../../config';
 
-
-
-
-
 // login user\
 const loginUser = catchAsync(async (req, res) => {
   const result: any = await AuthServices.loginUser(req.body);
