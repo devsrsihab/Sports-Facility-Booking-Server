@@ -13,9 +13,9 @@ export const initialPayment = async (paymentData: any) => {
     currency: 'BDT',
     tran_id: paymentData.tran_id,
     desc: `Payment for ${paymentData.userEmail} booking.`,
-    success_url: `http://localhost:8000/api/v1/payment/confirmation?tran_id=${paymentData.tran_id}&status=Successful`,
-    fail_url: `http://localhost:8000/api/v1/payment/confirmation?status=Failed`,
-    cancel_url: 'http://localhost:8000',
+    success_url: `https://srs-sport-server.vercel.app/api/v1/payment/confirmation?tran_id=${paymentData.tran_id}&status=Successful`,
+    fail_url: `https://srs-sport-server.vercel.app/api/v1/payment/confirmation?status=Failed`,
+    cancel_url: 'https://srs-sport-client.vercel.app',
     type: 'json',
   };
 
