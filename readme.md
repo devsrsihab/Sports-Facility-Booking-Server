@@ -8,7 +8,7 @@
 
 ## Live Demo
 
-- **Live URL**: [Sports Facility Booking Web App](https://srs-sport-client.vercel.app)
+- **Live URL**: [Sports Facility Booking Web App](https://srs-sport-server.vercel.app)
 
 ---
 
