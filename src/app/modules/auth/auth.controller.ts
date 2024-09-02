@@ -11,10 +11,10 @@ const loginUser = catchAsync(async (req, res) => {
   const { libraryRefreshToken, accessToken, neetPassWord } = result;
 
   // save refresh token in cookie
-  res.cookie('libraryRefreshToken', libraryRefreshToken, {
+   res.cookie('libraryRefreshToken', libraryRefreshToken, {
     secure: config.NODE_ENV === 'production',
     httpOnly: true,
-    sameSite: true,
+    sameSite: 'none',
     maxAge: 1000 * 60 * 60 * 24 * 365,
   });
 
